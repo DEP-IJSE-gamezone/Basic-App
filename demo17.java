@@ -151,6 +151,37 @@ public class demo17 {
                                         searchList = searchList.replace(searchDataSelected + "-", "");
                                         System.out.println("\033[32mSuccessfully deleted \033[0m");
                                         --numberOfStudent;
+                                        //update best and worst student
+                                        if ((idSelected.equals(worstStudent) || idSelected.equals(bestStudent)) && numberOfStudent > 1) {
+                                            worstStudent = "";
+                                            int worstMarks = 100, bestMarks = 0;
+                                            int commaIndex1 = 0;
+                                            //int totalMarks;
+                                            for (int j = 0; j < numberOfStudent; j++) {
+                                                String studentDetail = dataList.substring(commaIndex1, dataList.indexOf(",", commaIndex1));
+                                                int hypenIndex1 = 0;
+                                                for (int k = 0; k < 5; k++) {
+
+                                                    if (k == 4) {
+                                                        String totalMarksStr = studentDetail.substring(hypenIndex1, studentDetail.indexOf("-", hypenIndex1));
+                                                        int totalMarks = Integer.parseInt(totalMarksStr);
+
+                                                        if (bestMarks < totalMarks) {
+                                                            bestMarks = totalMarks;
+                                                            bestStudent = studentDetail.substring(0, studentDetail.indexOf("-"));
+                                                        }
+                                                        if (worstMarks > totalMarks) {
+                                                            worstMarks = totalMarks;
+                                                            worstStudent = studentDetail.substring(0, studentDetail.indexOf("-"));
+                                                        }
+
+                                                    }
+                                                    hypenIndex1 = studentDetail.indexOf("-", hypenIndex1) + 1;
+                                                }
+                                                commaIndex1 = dataList.indexOf(",", commaIndex1) + 1;
+                                            }
+                                        }
+
                                         if (numberOfStudent > 0)
                                             System.out.print("Do you want to delete another Student (y\\n) ? ");
                                         else System.out.printf("Do you want to exit (y\\n) ?");
